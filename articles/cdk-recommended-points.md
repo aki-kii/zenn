@@ -152,6 +152,12 @@ new Queue(this, 'Queue', {
 
 ## AWS CDK のコアコンセプト
 
+CDKはCloudFormationを抽象化したラッパーツールです。\
+抽象化するにあたって実装された概念がコアコンセプトとしてデベロッパーガイドに記載されています。\
+https://docs.aws.amazon.com/ja_jp/cdk/v2/guide/core-concepts.html
+
+コアコンセプトに関する推しポイントをあげていきます。
+
 ### L2 Constructの抽象化
 
 ### Permmisionsで簡単に権限を付与
