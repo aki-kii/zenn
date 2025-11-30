@@ -6,6 +6,10 @@ topics: ['aws', 'cdk', 'iac']
 published: true
 ---
 
+本記事は『AWS CDK Advent Calendar 2025』の1日目の記事です。
+
+https://qiita.com/advent-calendar/2025/aws-cdk
+
 AWS CDK は AWS の IaC サービスの 1 つで AWS のリソースをプログラミング言語で定義して管理・デプロイを行うツールです。\
 同じ AWS の IaC サービスである CloudFormation の抽象化レイヤーとして動作し、CDK アプリをCloudFormationテンプレートへ変換します。
 
