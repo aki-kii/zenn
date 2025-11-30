@@ -1,5 +1,5 @@
 ---
-title: 'AWS CDKの推しポイントN選'
+title: 'AWS CDKの推しポイントを紹介します'
 emoji: '😻'
 type: 'tech'
 topics: ['aws', 'cdk', 'iac']
@@ -591,5 +591,3 @@ CDK の単体テスト手法のひとつです。
 
 こちらの記事では CDK の単体テストについて、実例を交えて詳しく解説されています。\
 https://aws.amazon.com/jp/builders-flash/202411/learn-cdk-unit-test/
-
-## まとめ
