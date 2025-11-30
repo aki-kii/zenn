@@ -1,13 +1,13 @@
 ---
 title: 'AWS CDKの推しポイントN選'
 emoji: '😻'
-type: 'tech' # tech: 技術記事 / idea: アイデア
+type: 'tech'
 topics: ['aws', 'cdk', 'iac']
 published: false
 ---
 
-AWS CDK は AWS の IaC サービスの 1 つで、AWS のリソースをプログラミング言語で定義して管理・デプロイを行うツールです。\
-同じ IaC サービスである CloudFormation をラップすることによって抽象化しています。
+AWS CDK は AWS の IaC サービスの 1 つで AWS のリソースをプログラミング言語で定義して管理・デプロイを行うツールです。\
+同じ AWS の IaC サービスである CloudFormation を抽象化してラップしています。
 
 そんな AWS CDK の推しポイントをカテゴリに分けて紹介します！
 
@@ -17,14 +17,14 @@ AWS CDK は AWS の IaC サービスの 1 つで、AWS のリソースをプロ�
 
 ## IaC 編
 
-AWS リソースをデプロイする方法は他にもいろいろあります。\
+AWS リソースのデプロイ方法は他にもいろいろあります。\
 例えば、AWS コンソールからデプロイしたり、AWS CLI を利用してコマンドからデプロイ、SDK を使ってプログラムからデプロイしたりできます。
 
 ![alt text](/images/cdks-recommended-points/make-aws-resource.dio.png)
 
 IaC では、コードで作成した定義ファイルと現在の状態の差分によってデプロイが行われます。
 
-![alt text](/images//cdks-recommended-points//whats-iac.dio.png)
+![alt text](/images/cdks-recommended-points/whats-iac.dio.png)
 
 AWS CDK が IaC であることによる推しポイントをあげていきます。
 
@@ -37,32 +37,32 @@ AWS CDK の定義ファイルはプログラミング言語で書かれている
 
 ### 2. リソースの設定を集約できる
 
-AWS コンソールでリソースの関係性を見ようと思った時、迷ったことはありませんか？\
-例えば、S3 バケットからイベント通知で Lambda 関数が起動し DynamoDB テーブルに書き込む構成の関連性を調査しようとした時、次のように調べることとなると思います。
+AWS コンソールでリソースの関係性を見ようと思った時、迷ったことはありませんか？
 
-1. S3 バケット/プロパティ/イベント通知 → Lambda 関数
-2. Lambda 関数/コード/ソースコード or Lambda 関数/設定/アクセス権限　 → DynamoDB テーブル
+例えば S3 バケットからイベント通知で Lambda 関数が起動し DynamoDB テーブルに書き込む構成の関連性を調査しようとした時、次のように調べることとなると思います。
 
-TODO: コンソールのスクショがベスト
+![alt text](/images/cdks-recommended-points/resource-trace.dio.png)
 
-CDK では、リソースの設定が Git リポジトリに集約されているので関係性の把握がしやすいです。
+（Lambda 関数のコードから依存リソースを追うこともできます）
+
+CDK ではリソースの設定が Git リポジトリに集約されているため、リソースの関係性の把握をしやすいです。
 
 ### 3. デプロイの安全性が向上する
 
-AWS コンソールや CLI などを用いてデプロイする場合、リソースごとにデプロイして確認する必要があるため手順が複雑になります。\
+AWS コンソールや CLI などを用いてのデプロイでは、リソースごとにデプロイして確認する必要があるため手順が複雑になります。\
 手順が複雑な場合はクリックミスや設定の確認漏れが発生しやすくなります。
 
-CDK では最小のデプロイ単位であるスタック単位でデプロイするため手順を簡単化できます。
+CDK のデプロイはリソースを集めた「スタック」の単位で実行されるため、手順が簡素となりデプロイの属人性を排除できます。
 
 ![alt text](/images/cdks-recommended-points/deploy-safety.dio.png)
 
-AWS CDK からデプロイするコマンドの一例です。
+AWS CDK デプロイコマンドの一例です。
 
 ```shell
 npx cdk deploy
 ```
 
-TODO: 気の利いたコメント
+CDK のデプロイコマンドを実行したら後は CloudFormation によってデプロイされるため、人間が操作する時間を減らせます。
 
 ### 4. 環境の複製が容易
 
@@ -71,11 +71,9 @@ IaC ではインフラリソースをコードで定義するため、そのコ�
 
 ![alt text](/images/cdks-recommended-points/multi-environment.dio.png)
 
-CDK では「デプロイする AWS アカウントを分ける」「スタック名に環境名を含める」ことで実現可能です。\
+CDK では「デプロイ対象の AWS アカウントを分ける」「スタック名に環境名を含める」ことで実現可能です。\
 基本的にはどちらも取り入れることをお勧めします。\
-(「スタック名に環境名を含める」理由は、リソース名を自動生成する場合に環境名が含まれるため環境ごとに異なるリソース名になるためです)
-
-TODO: コードを書けたらベスト
+(「スタック名に環境名を含める」理由は、リソースの物理名を自動生成する場合に環境名が含まれるので名前の衝突が発生しないためです)
 
 設定ファイルを用意することで環境ごとに異なるプロパティを設定できます。\
 例えば、開発環境では Lambda のメモリを 512MB、本番環境では 2048MB などの異なる設定にできます。
@@ -98,7 +96,7 @@ export class MyConstruct extends Construct {
     super(scope, id);
 
     new Queue(this, 'Queue', {
-      visivilityTimeout: Duration.seconds(30),
+      visibilityTimeout: Duration.seconds(30),
     });
   }
 }
@@ -151,7 +149,7 @@ Duration.seconds(30);
 
 ## AWS CDK のコアコンセプト
 
-CDK は CloudFormation を抽象化したラッパーツールです。\
+AWS CDK は CloudFormation の抽象化レイヤーとして動作し CDK アプリを CloudFormation テンプレートへ変換してデプロイします。\
 抽象化するにあたって実装された概念がコアコンセプトとしてデベロッパーガイドに記載されています。\
 https://docs.aws.amazon.com/ja_jp/cdk/v2/guide/core-concepts.html
 
@@ -431,11 +429,11 @@ bucket.grants.read(func);
 ### 10. バリデーションでデータの正当性を検査できる
 
 L2 Construct ではデプロイ時に失敗するコードを検証する仕組みを持っています。\
-CloudFormation テンプレートの合成時にバリデーションコードか実行されるため、デプロイ時だけではなくスナップショットテストの実行時や Synthesize 実行時にも検証できます。
+CloudFormation テンプレートの合成時にバリデーションコードが実行されるため、デプロイ時だけではなくスナップショットテストの実行時や Synthesize 実行時にも検証できます。
 
 例えば SQS Queue を作成するときの例を見てみます。
 
-FIFO Queue を作成するときはリソース名のサフィックスに`.fifo` と付ける必要があります。\
+FIFO Queue の名前を指定するときはリソース名のサフィックスに`.fifo` と付ける必要があります。\
 CDK の L2 Construct 「Queue」を利用すれば、テンプレートを構成したタイミングでエラーに気づけます。
 
 ```ts
@@ -463,7 +461,8 @@ export class CdkSampleStack extends Stack {
   ...
 ```
 
-デプロイするより早いタイミングで検証できるため、レビュー前に確認できます。TODO: 文章直す
+自己レビューの段階で気づけるため手戻りが少なくなります。\
+デプロイのタイミングで気づくことを考えると恐ろしいですね...
 
 ### 11. Aspects
 
