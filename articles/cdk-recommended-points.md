@@ -179,14 +179,15 @@ Lambda FunctionからS3 Bucketに対して読み取り権限を付与する例�
 
 TODO: 例を作成
 
-### バリデーションで設定ミスを事前に検査できる
+### バリデーションでデータの正当性を検査できる
 
 L2 Constructではデプロイ時に失敗するコードを検証する仕組みを持っています。\
-CloudFormationテンプレートの合成時にバリデーションコードか実行されるため、デプロイ時だけではなくスナップショットテストの実行時やCDK Synth時にも検証できます。
+CloudFormationテンプレートの合成時にバリデーションコードか実行されるため、デプロイ時だけではなくスナップショットテストの実行時やSynthesize実行時にも検証できます。
 
 例えばSQS Queueを作成するときの例を見てみます。
 
-FIFO Queueを作成するときはリソース名のサフィックスに.fifoと付ける必要があります。\
+FIFO Queueを作成するときはリソース名のサフィックスに.fifoと付ける必要があります。
+
 CloudFormationでデプロイする時はデプロイ時にエラーが発生します。
 
 CDKのL2 Construct 「Queue」を利用すれば、テンプレートを構成したタイミングでエラーに気づけます。
@@ -195,4 +196,23 @@ TODO: 例を作成
 
 ### Aspects
 
-### テストで設定ミスを事前に検査できる
+Aspectsを利用することで複数のAWSリソースに対して操作を適用できます。
+
+CDKはAppクラスをルートとしてConstruct treeを形成します。
+
+https://docs.aws.amazon.com/ja_jp/cdk/v2/guide/apps.html#apps-tree
+
+Construct treeの特定のスコープ対してAspectsを適用すると、そのスコープ内のリソース全てに操作を適用できます。\
+スコープの中でも特定のリソースタイプのみに適用することも可能です。
+
+主なユースケースは次の通りです。
+
+- リソースにタグを設定する(Tagsクラスが用意されている)
+- リソースに削除ポリシー設定する(RemovalPoliciesクラスが用意されている)
+- リソースが会社のポリシーに適応しているか検証する
+
+### Snapshot test
+
+### Fine-grained Assertion test
+
+### Integ test
