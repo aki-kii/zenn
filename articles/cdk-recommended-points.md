@@ -155,7 +155,7 @@ https://docs.aws.amazon.com/ja_jp/cdk/v2/guide/core-concepts.html
 
 コアコンセプトに関する推しポイントをあげていきます。
 
-### 8. L2 Construct の抽象化
+### 8. L2 Construct
 
 L2 Construct は CloudFormation テンプレートのプロパティを利用者にとって扱いやすいように抽象化しています。\
 この抽象化技術により IaC を用いた開発を簡易化でき、コードの可読性も高まります。
@@ -388,7 +388,7 @@ export class CdkSampleStack extends Stack {
 ただし、書かれているリソース以外にも Route Table や Internet Gateway など、色々なリソースが作られています。\
 リソースを勝手に作られるのが嫌な場合は、指定することもできます。
 
-### 9. Grants で簡単に権限を付与
+### 9. Grants
 
 AWS リソースから他の AWS リソースを呼び出す際は、サービスが利用する IAM Role に権限を付与する必要があります。\
 L2 Construct には権限設定を簡単に行える「Grants」を利用できます。
@@ -426,7 +426,7 @@ bucket.grants.read(func);
 }
 ```
 
-### 10. バリデーションでデータの正当性を検査できる
+### 10. バリデーション
 
 L2 Construct ではデプロイ時に失敗するコードを検証する仕組みを持っています。\
 CloudFormation テンプレートの合成時にバリデーションコードが実行されるため、デプロイ時だけではなくスナップショットテストの実行時や Synthesize 実行時にも検証できます。
@@ -590,3 +590,12 @@ CDK の単体テスト手法のひとつです。
 
 こちらの記事では CDK の単体テストについて、実例を交えて詳しく解説されています。\
 https://aws.amazon.com/jp/builders-flash/202411/learn-cdk-unit-test/
+
+## まとめ
+
+AWS CDKの推しポイントを紹介しました。\
+紹介したポイントに共感したり初めて知った機能を見つけて使いたくなったりしたのではないでしょうか？
+
+この記事で特に紹介したかったのはL2 Constructの抽象化技術についてです。\
+CDKの肝とも言える抽象化を利用すればインフラのデプロイを爆速かつ安全にできます！\
+僕はそこに魅力を感じてCDKを使い続けるのです…！
