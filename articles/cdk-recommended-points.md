@@ -109,7 +109,7 @@ export class MyConstruct extends Construct {
 
 ![alt text](/images/cdks-recommended-points/code-completion-suggest.png)
 
-階層構造になっているプロパティをリストアップしてくれます。
+階層構造になっているプロパティもリストアップしてくれます。
 
 ![alt text](/images/cdks-recommended-points/code-completion-list.png)
 
@@ -126,7 +126,7 @@ IDE 上でオブジェクトにホバーすれば、実装に記載されてい�
 
 ### 7. 構文エラーがわかる
 
-CDK の構文を間違えた時に、構文エラーとしてエラー内容が表示されます。
+CDK の構文を間違えた時に構文エラーとしてエラー内容が表示されます。
 
 構文エラーの中でも型エラーを紹介します。
 
@@ -145,7 +145,7 @@ Duration.seconds(30);
 
 ![alt text](/images/cdks-recommended-points/syntax-error-message.png)
 
-デプロイ前に気づけるので、安全性が増します。
+コーディング中に気づけるので設定間違えを減らせます。
 
 ## AWS CDK のコアコンセプト
 
