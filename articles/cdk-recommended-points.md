@@ -142,20 +142,13 @@ import { Duration } from 'aws-cdk-lib';
 Duration.seconds(30);
 ```
 
-本来`Duration`型を渡さないといけないのに、`int`型を渡したとしましょう。\
-そうするとエラーとなります。
-TODO: スクショがベターか？
+本来`Duration`型を渡さないといけないのに、`int`型を渡すとエラーとなります。
 
-```ts
-import { Queue } from 'aws-cdk-lib/aws-sqs';
+![alt text](/images/cdks-recommended-points/syntax-error-code.png)
 
-new Queue(this, 'Queue', {
-  // Type 'number' is not assignable to type 'Duration'.
-  visibilityTimeout: 30,
-});
-```
+![alt text](/images/cdks-recommended-points/syntax-error-message.png)
 
-デプロイの事前に気づけるので、安全性が増します。
+デプロイ前に気づけるので、安全性が増します。
 
 ## AWS CDK のコアコンセプト
 
@@ -178,9 +171,9 @@ L2 で行われている抽象化として、適切なデフォルトプロパ�
 
 Amazon VPC を作成する L2 Construct の実装例を見てみます。
 
-TODO: 構成図
+![alt text](/images/cdks-recommended-points/vpc-architecture.dio.png)
 
-CloudFormation の Resources ブロックに書くと 244 行もかかります。\
+CloudFormation の Resources ブロックに書くと 174 行もかかります。\
 作るのに手間がかかりますし、視認性も良くありません。
 
 :::details VPC の CloudFormation テンプレート
@@ -360,76 +353,6 @@ Resources:
         Ref: 'NetworkingVpcIGW21218DAB'
       VpcId:
         Ref: 'NetworkingVpc6B5E6F44'
-  NetworkingVpcRestrictDefaultSecurityGroupCustomResourceF3A61192:
-    Type: 'Custom::VpcRestrictDefaultSG'
-    Properties:
-      ServiceToken:
-        Fn::GetAtt:
-          - 'CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E'
-          - 'Arn'
-      DefaultSecurityGroupId:
-        Fn::GetAtt:
-          - 'NetworkingVpc6B5E6F44'
-          - 'DefaultSecurityGroup'
-      Account:
-        Ref: 'AWS::AccountId'
-    UpdateReplacePolicy: 'Delete'
-    DeletionPolicy: 'Delete'
-  CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Action: 'sts:AssumeRole'
-            Effect: 'Allow'
-            Principal:
-              Service: 'lambda.amazonaws.com'
-      ManagedPolicyArns:
-        - Fn::Sub: 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
-      Policies:
-        - PolicyName: 'Inline'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: 'Allow'
-                Action:
-                  - 'ec2:AuthorizeSecurityGroupIngress'
-                  - 'ec2:AuthorizeSecurityGroupEgress'
-                  - 'ec2:RevokeSecurityGroupIngress'
-                  - 'ec2:RevokeSecurityGroupEgress'
-                Resource:
-                  - Fn::Join:
-                      - ''
-                      -
-                      - 'arn:'
-                      - Ref: 'AWS::Partition'
-                      - ':ec2:'
-                      - Ref: 'AWS::Region'
-                      - ':'
-                      - Ref: 'AWS::AccountId'
-                      - ':security-group/'
-                      - Fn::GetAtt:
-                          - 'NetworkingVpc6B5E6F44'
-                          - 'DefaultSecurityGroup'
-  CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E:
-    Type: 'AWS::Lambda::Function'
-    Properties:
-      Code:
-        S3Bucket:
-          Fn::Sub: 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}'
-        S3Key: '7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200.zip'
-      Timeout: '900'
-      MemorySize: '128'
-      Handler: '__entrypoint__.handler'
-      Role:
-        Fn::GetAtt:
-          - 'CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0'
-          - 'Arn'
-      Runtime: 'nodejs22.x'
-      Description: 'Lambda function for removing all inbound/outbound rules from the VPC default security group'
-    DependsOn:
-      - 'CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0'
 ```
 
 :::
