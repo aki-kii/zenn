@@ -27,16 +27,14 @@ IaC では、コードで作成した定義ファイルと現在の状態の差�
 
 ![alt text](/images//cdks-recommended-points//whats-iac.dio.png)
 
-AWS CDK が IaC であることによって嬉しいポイントをあげていきます。
+AWS CDK が IaC であることによる推しポイントをあげていきます。
 
 ### 1. 定義ファイルの変更管理ができる
 
 AWS CDK の定義ファイルはプログラミング言語で書かれているため、Git などのバージョン管理システムを用いることで変更管理が容易に行えます。\
 リソースの変更差分を残せる上、最新の状態が一目瞭然です。
 
-TODO: GitHub のスクショがベスト
-
-![alt text](/images/cdks-recommended-points/change-management-for-git.png)
+![alt text](/images/cdks-recommended-points/diff-for-github.png)
 
 ### 2. リソースの設定を集約できる
 
@@ -55,23 +53,24 @@ CDK では、リソースの設定が Git リポジトリに集約されてい�
 AWS コンソールや CLI などを用いてデプロイする場合、リソースごとにデプロイして確認する必要があるため手順が複雑になります。\
 手順が複雑な場合はクリックミスや設定の確認漏れが発生しやすくなります。
 
-TODO: 図を書けたらベスト
+CDK では最小のデプロイ単位であるスタック単位でデプロイするため手順を簡単化できます。
 
-CDK では最小のデプロイ単位であるスタック単位でデプロイするため手順を簡単化できます。\
+![alt text](/images/cdks-recommended-points/deploy-safety.dio.png)
+
 AWS CDK からデプロイするコマンドの一例です。
 
 ```shell
 npx cdk deploy
 ```
 
-また、デプロイ前にレビューすることで意図しない変更を未然に防ぎやすくなります。
+TODO: 気の利いたコメント
 
 ### 4. 環境の複製が容易
 
 ソフトウェア開発では開発・検証・本番などの複数の環境を利用します。\
 IaC ではインフラリソースをコードで定義するため、そのコードを用いて複数の環境にデプロイできます。
 
-TODO: 図を書けたらベスト
+![alt text](/images/cdks-recommended-points/multi-environment.dio.png)
 
 CDK では「デプロイする AWS アカウントを分ける」「スタック名に環境名を含める」ことで実現可能です。\
 基本的にはどちらも取り入れることをお勧めします。\
