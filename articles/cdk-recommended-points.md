@@ -492,7 +492,7 @@ CloudFormation テンプレートを合成して以前のテンプレートと�
 リソースやプロパティを変更した場合はもちろん差分が出るので、これが適切であると判断すれば Snapshot test を更新します。\
 リファクタリング時には差分が出ないことを確認できます。
 
-デフォルトの S3 Bucket に対してスナップショットテストを実施します。
+デフォルトの S3 Bucket に対して事前にスナップショットを取得した上でスナップショットテストを実施します。
 
 ```ts
 export class CdkSampleStack extends Stack {
@@ -519,7 +519,7 @@ export class CdkSampleStack extends Stack {
    ...
 ```
 
-S3 Bucket にバージョニングの設定を追加します。
+S3 Bucket のバージョニングを有効にします。
 
 ```diff ts
 export class CdkSampleStack extends Stack {
