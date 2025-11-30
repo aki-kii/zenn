@@ -7,8 +7,9 @@ published: false
 ---
 
 AWS CDK は AWS の IaC サービスの 1 つで AWS のリソースをプログラミング言語で定義して管理・デプロイを行うツールです。\
-同じ AWS の IaC サービスである CloudFormation を抽象化してラップしています。
+同じ AWS の IaC サービスである CloudFormation の抽象化レイヤーとして動作し、CDK アプリをCloudFormationテンプレートへ変換します。
 
+CDKは「インフラリソースの設定を抽象化して定義する」という点で他のデプロイ方法やIaCサービスにはない魅力を持っていると感じます。\
 そんな AWS CDK の推しポイントをカテゴリに分けて紹介します！
 
 - IaC 編
@@ -17,8 +18,7 @@ AWS CDK は AWS の IaC サービスの 1 つで AWS のリソースをプログ
 
 ## IaC 編
 
-AWS リソースのデプロイ方法は他にもいろいろあります。\
-例えば、AWS コンソールからデプロイしたり、AWS CLI を利用してコマンドからデプロイ、SDK を使ってプログラムからデプロイしたりできます。
+AWSへのデプロイ方法はIaCの他にも主なところではAWS コンソールやAWS CLI、SDKがあります。
 
 ![alt text](/images/cdks-recommended-points/make-aws-resource.dio.png)
 
