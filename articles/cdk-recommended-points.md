@@ -3,7 +3,7 @@ title: 'AWS CDKの推しポイントを紹介します'
 emoji: '😻'
 type: 'tech'
 topics: ['aws', 'cdk', 'iac']
-published: false
+published: true
 ---
 
 AWS CDK は AWS の IaC サービスの 1 つで AWS のリソースをプログラミング言語で定義して管理・デプロイを行うツールです。\
