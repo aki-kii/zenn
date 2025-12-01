@@ -22,11 +22,11 @@ CDKは「インフラリソースの設定を抽象化して定義する」と�
 
 ## IaC 編
 
-AWSへのデプロイ方法はIaCの他にも主なところではAWS コンソールやAWS CLI、SDKがあります。
+AWSへのデプロイ方法はIaCの他にも主なところでAWS コンソールやAWS CLI、SDKがあります。
 
 ![alt text](/images/cdks-recommended-points/make-aws-resource.dio.png)
 
-IaC では、コードで作成した定義ファイルと現在の状態の差分によってデプロイが行われます。
+IaC ではコードで作成した定義ファイルと現在の状態の差分によってデプロイが行われます。
 
 ![alt text](/images/cdks-recommended-points/whats-iac.dio.png)
 
@@ -34,7 +34,7 @@ AWS CDK が IaC であることによる推しポイントをあげていきま�
 
 ### 1. 定義ファイルの変更管理ができる
 
-AWS CDK の定義ファイルはプログラミング言語で書かれているため、Git などのバージョン管理システムを用いることで変更管理が容易に行えます。\
+AWS CDK の定義ファイル(コード)はプログラミング言語で書かれているため、Git などのバージョン管理システムを用いることで変更管理が容易に行えます。\
 リソースの変更差分を残せる上、最新の状態が一目瞭然です。
 
 ![alt text](/images/cdks-recommended-points/diff-for-github.png)
@@ -49,7 +49,7 @@ AWS コンソールでリソースの関係性を見ようと思った時に迷�
 
 （Lambda 関数のコードから依存リソースを追うこともできます）
 
-CDK ではリソースの設定が Git リポジトリに集約されているため、リソースの関係性の把握をしやすいです。
+CDK ではリソースの設定が Git リポジトリに集約されているため、リソースの関係性を把握しやすいです。
 
 ### 3. デプロイの安全性が向上する
 
@@ -87,7 +87,7 @@ CDK では「デプロイ対象の AWS アカウントを分ける」「スタ�
 Visual Studio Code のような IDE(統合開発環境)では、ソフトウェア開発をサポートする機能が多く組み込まれています。\
 AWS CDK は TypeScript や Python などのプログラミング言語で書くため、IDE のサポートを受けられます。
 
-CDK で実装する時に嬉しい IDE のサポート機能について、次のコードをベースに紹介します。\
+CDK におけるIDE のサポート機能についての推しポイントを、次のコードをベースに紹介します。\
 可視性タイムアウトを 30 秒に設定した SQS キューを作成しています。
 
 ```ts
@@ -106,7 +106,7 @@ export class MyConstruct extends Construct {
 }
 ```
 
-### 5. コード補完が効く
+### 5. コード補完が利用できる
 
 コードの予測をしてくれる機能です。\
 途中まで入力したら予測を出してくれます。
@@ -143,13 +143,15 @@ import { Duration } from 'aws-cdk-lib';
 Duration.seconds(30);
 ```
 
-本来`Duration`型を渡さないといけないのに、`int`型を渡すとエラーとなります。
+本来`Duration`型を渡さないといけないのに、`number`型を渡すとエラーとなります。
 
 ![alt text](/images/cdks-recommended-points/syntax-error-code.png)
 
+本来は`Duration`型を渡す必要があるのに`number`型を渡していると言われてます。
+
 ![alt text](/images/cdks-recommended-points/syntax-error-message.png)
 
-コーディング中に気づけるので設定間違えを減らせます。
+コーディング中に気づけるので設定間違いを減らせます。
 
 ## AWS CDK のコアコンセプト
 
