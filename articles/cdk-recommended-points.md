@@ -399,7 +399,7 @@ export class CdkSampleStack extends Stack {
 AWS リソースから他の AWS リソースを呼び出す際は、サービスが利用する IAM Role に権限を付与する必要があります。\
 L2 Construct には権限設定を簡単に行える「Grants」を利用できます。
 
-次の例では、Lambda Function から S3 Bucket に対して読み取り権限を付与しています。\
+次の例では、Lambda Function から S3 Bucket に対して読み取り権限を付与しています。
 
 ```ts
 const bucket = new Bucket(this, 'Bucket');
@@ -414,7 +414,7 @@ const func = new NodejsFunction(this, 'Function', {
 bucket.grants.read(func);
 ```
 
-作成された IAM ロールには、S3 Bucket に対して読み取り権限が付与されています。
+作成された IAM ポリシーには、S3 Bucket に対して読み取り権限が付与されています。
 
 ```json
 {
@@ -435,12 +435,12 @@ bucket.grants.read(func);
 ### 10. バリデーション
 
 L2 Construct ではデプロイ時に失敗するコードを検証する仕組みを持っています。\
-CloudFormation テンプレートの合成時にバリデーションコードが実行されるため、デプロイ時だけではなくスナップショットテストの実行時や Synthesize 実行時にも検証できます。
+CloudFormation テンプレートの合成時にバリデーションコードが実行されるため、デプロイ時だけではなく Snapshot test の実行時や Synthesize 実行時にも検証できます。
 
 例えば SQS Queue を作成するときの例を見てみます。
 
 FIFO Queue の名前を指定するときはリソース名のサフィックスに`.fifo` と付ける必要があります。\
-CDK の L2 Construct 「Queue」を利用すれば、テンプレートを構成したタイミングでエラーに気づけます。
+CDK の L2 Construct 「Queue」を利用すれば、テンプレートを合成したタイミングでバリデーションが走りエラーに気づけます。
 
 ```ts
 export class CdkSampleStack extends Stack {
@@ -456,7 +456,7 @@ export class CdkSampleStack extends Stack {
 }
 ```
 
-このコードを synthesize すると Validation エラーが発生します。
+Synthesize すると Validation エラーが発生しました。
 
 ```shell
 % npx cdk synth
@@ -468,11 +468,11 @@ export class CdkSampleStack extends Stack {
 ```
 
 自己レビューの段階で気づけるため手戻りが少なくなります。\
-デプロイのタイミングで気づくことを考えると恐ろしいですね...
+デプロイのタイミングで気づいたらと考えると恐ろしいですね...
 
 ### 11. Aspects
 
-Aspects を利用することで複数の AWS リソースに対して操作を適用できます。
+Aspects を利用することで複数の AWS リソースに対して一度に操作を適用できます。
 
 CDK は App クラスをルートとして Construct tree を形成します。
 
@@ -482,6 +482,8 @@ https://docs.aws.amazon.com/ja_jp/cdk/v2/guide/apps.html#apps-tree
 
 Construct tree の特定のスコープ対して Aspects を適用すると、そのスコープ内のリソース全てに操作を適用できます。\
 スコープの中でも特定のリソースタイプのみに適用することも可能です。
+
+次の図は Stack A の全てのリソースにタグを付けるイメージ図です。
 
 ![alt text](/images/cdks-recommended-points/aspects.dio.png)
 
