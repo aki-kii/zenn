@@ -6,6 +6,10 @@ topics: ['aws', 'cdk', 'iac']
 published: true
 ---
 
+本記事は『AWS CDK Advent Calendar 2025』の 2 日目の記事です。
+
+https://qiita.com/advent-calendar/2025/aws-cdk
+
 ## はじめに
 
 AWS CDK で新機能の「Mixins」が Developers preview 版として利用可能になりました。
@@ -192,7 +196,7 @@ export class CdkSampleStack extends Stack {
 
 ### リソース固有の Mixins
 
-S3 バケットや SQS キューなどの特定の AWS サービスに対してL2 Construct で利用できるような抽象化された操作を行う機能です。\
+S3 バケットや SQS キューなどの特定の AWS サービスに対して L2 Construct で利用できるような抽象化された操作を行う機能です。\
 これまで例として挙げていた S3 バケットの`EnableVersioning`もその一つです。
 
 `EnableVersioning`はネストしたプロパティの簡単な抽象化でしたが、`AutoDeleteObject`を利用すれば「S3 バケットを削除するときにバケット内のオブジェクトを自動で削除してくれる」機能を持っているためとても強力です。
@@ -209,8 +213,8 @@ export class CdkSampleStack extends Stack {
     super(scope, id, props);
 
     new CfnBucket(this, 'CfnBucket')
-        // S3バケットを削除するときに中身のオブジェクトを削除する処理を追加
-        .with(new AutoDeleteObjects());
+      // S3バケットを削除するときに中身のオブジェクトを削除する処理を追加
+      .with(new AutoDeleteObjects());
   }
 }
 ```
@@ -218,11 +222,8 @@ export class CdkSampleStack extends Stack {
 これまで L2 Construct のみに提供されていた抽象化の機能がこれからは L1 Construct でも利用できるようになります。\
 全ての抽象化を受け入れたくないけど、運用を簡単にするために一部の抽象化メソッドを利用したい場合に便利です。
 
-
-
 リソース固有の Mixins の抽象化機能はまだ実装が進んでおらず、まだあまり機能は提供されていません（自分が見つけたのは紹介した 2 つのみです）\
 今後は L2 Construct に実装されている抽象化機能を実装されていくのではないでしょうか。
-
 
 #### L1 プロパティ Mixins
 
@@ -250,7 +251,7 @@ export class CdkSampleStack extends Stack {
 }
 ```
 
-エスケープハッチを利用してL1 プロパティを設定する場合は間違えても気付けませんが、L1 プロパティMixinsでは型サポートが得られるため安全に書けます。
+エスケープハッチを利用して L1 プロパティを設定する場合は間違えても気付けませんが、L1 プロパティ Mixins では型サポートが得られるため安全に書けます。
 
 <!-- この操作は対象リソースのプロパティと競合するので 2 つのマージ戦略から解決策を選べます。
 
@@ -280,7 +281,6 @@ Mixins.of(bucket).apply(
 ```
 
 // TODO: 結果を書く -->
-
 
 ### カスタム Mixins
 
@@ -411,8 +411,8 @@ export class CdkSampleStack extends Stack {
 
 CDK の新しい機能 Mixins を試してみました。
 
-L1, L2 Construct の境界を近づけることで組織のポリシーによってConstructを使い分ける未来がみえました。
-特にL1 Construct は Mixins 以外にも Grants クラスや IXxxReference クラスが実装されたためどんどん抽象化のための機能が拡充されています。
+L1, L2 Construct の境界を近づけることで組織のポリシーによって Construct を使い分ける未来がみえました。
+特に L1 Construct は Mixins 以外にも Grants クラスや IXxxReference クラスが実装されたためどんどん抽象化のための機能が拡充されています。
 
-まだDeveloper Preview版なので今後の機能拡充が楽しみです！\
-特にサービス間Mixinsにどんな機能が追加されるのか注目してます👀
+まだ Developer Preview 版なので今後の機能拡充が楽しみです！\
+特にサービス間 Mixins にどんな機能が追加されるのか注目してます 👀
