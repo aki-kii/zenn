@@ -1260,7 +1260,7 @@ export class SampleStack extends Stack {
 }
 ```
 
-スナップショットテストでは、
+テストファイルでgetConfig()関数を呼び出して環境ごとの設定を取得しています。
 
 ```ts diff:test/sample-stack.test.ts
 import { App } from 'aws-cdk-lib';
@@ -1281,15 +1281,16 @@ const getContext = (): Record<string, any> => {
 };
 
 // 全ての環境名を用意
-const parameters = [
-  {
-    env: 'dev',
-  },
-  {
-    env: 'prod',
-  },
-];
-const getTemplate = (env: string): Template => {
++const parameters = [
++  {
++    env: 'dev',
++  },
++  {
++    env: 'prod',
++  },
++];
+-const getTemplate = (): Template => {
++const getTemplate = (env: string): Template => {
   const app = new App({
     context: {
       ...getContext(),
@@ -1298,18 +1299,19 @@ const getTemplate = (env: string): Template => {
     },
   });
   // 環境ごとのパラメータを取得
-  const config = getConfig(env);
++  const config = getConfig(env);
   const stack = new SampleStack(app, 'SampleStack', config); // Stackにパラメータを渡す
 
   return Template.fromStack(stack);
 };
 
-describe.each(parameters)('testing environment: %s', (parameter) => {
++describe.each(parameters)('testing environment: %s', (parameter) => {
   test('Snapshot test', () => {
-    const template = getTemplate(parameter.env);
+-    const template = getTemplate();
++    const template = getTemplate(parameter.env);
     expect(template).toMatchSnapshot();
   });
-});
++});
 ```
 
 スナップショットテストを実行すると用意した全ての環境でテストを行なっていることがわかります。\
