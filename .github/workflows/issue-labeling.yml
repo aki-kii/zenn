@@ -15,4 +15,4 @@ jobs:
           ISSUE_LABELS: ${{ toJson(github.event.issue.labels.*.name ) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LABEL: article
-        run: gh issues edit "$ISSUE_NUMBER" --add-label "$LABEL"
+        run: gh issue edit "$ISSUE_NUMBER" --add-label "$LABEL"
