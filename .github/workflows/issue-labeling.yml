@@ -1,0 +1,18 @@
+name: Issue labeling workflow
+on:
+  issues:
+    types: [opened, edited]
+jobs:
+  issue-labeling:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Add label
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_LABELS: ${{ github.event.issue.labels}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LABEL: article
+        run: gh issues edit "$ISSUE_NUMBER" --add-label "$LABEL"
