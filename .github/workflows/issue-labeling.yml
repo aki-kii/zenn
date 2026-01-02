@@ -9,6 +9,8 @@ jobs:
       issues: write
       contents: read
     steps:
+　　　　- name: Checkout
+        uses: actions/@checkout@v6
       - name: Add label by title prefix
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
