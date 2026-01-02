@@ -13,8 +13,8 @@ jobs:
       - uses: actions/create-github-app-token@v2
         id: app-token
         with:
-          app_id: ${{ vars.MIRROR_APP_ID }}
-          private_key: ${{ secrets.MIRROR_PRIVATE_KEY }}
+          app-id: ${{ vars.MIRROR_APP_ID }}
+          private-key: ${{ secrets.MIRROR_PRIVATE_KEY }}
           repositories: zenn
       - uses: actions/checkout@v6
         with:
