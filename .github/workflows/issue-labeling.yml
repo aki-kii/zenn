@@ -1,21 +1,36 @@
 name: Issue labeling workflow
 on:
   issues:
-    types: [opened, edited]
+    types: [opened]
 jobs:
   issue-labeling:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      contents: read 
+      contents: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Add label
+      - name: Add label by title prefix
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_LABELS: ${{ toJson(github.event.issue.labels.*.name ) }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LABEL: article
-        run: gh issue edit "$ISSUE_NUMBER" --add-label "$LABEL"
+        run: |
+          set -e
+
+          title_lower=$(echo "$ISSUE_TITLE" | tr '[:upper:]' '[:lower:]')
+          label=""
+
+          if [[ "$title_lower" == article* ]]; then
+            label="article"
+          elif [[ "$title_lower" == book* ]]; then
+            label="book"
+          elif [[ "$title_lower" == feat* ]]; then
+            label="enhancement"
+          fi
+
+          if [[ -n "$label" ]]; then
+            echo "Add label: $label"
+            gh issue edit "$ISSUE_NUMBER" --add-label "$label"
+          else
+            echo "No matching prefix, skip labeling"
+          fi
