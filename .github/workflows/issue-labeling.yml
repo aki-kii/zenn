@@ -5,6 +5,7 @@ on:
 
 jobs:
   issue-labeling:
+    if: github.repository == 'aki-kii/zenn-private'
     runs-on: ubuntu-latest
     permissions:
       issues: write
