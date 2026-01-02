@@ -2,6 +2,7 @@ name: Issue labeling workflow
 on:
   issues:
     types: [opened]
+
 jobs:
   issue-labeling:
     runs-on: ubuntu-latest
@@ -9,8 +10,9 @@ jobs:
       issues: write
       contents: read
     steps:
-　　　　- name: Checkout
-        uses: actions/@checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Add label by title prefix
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
