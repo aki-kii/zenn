@@ -15,9 +15,12 @@ jobs:
         with:
           app-id: ${{ vars.MIRROR_APP_ID }}
           private-key: ${{ secrets.MIRROR_PRIVATE_KEY }}
-          repositories: zenn
+          repositories: |
+            zenn
+            zenn-private
       - uses: actions/checkout@v6
         with:
+          repository: "aki-kii/zenn-private"
           token: ${{ steps.app-token.outputs.token }}
       - run: |
           git remote add mirror https://github.com/aki-kii/zenn.git
