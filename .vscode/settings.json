@@ -1,17 +1,10 @@
 {
-    "[markdown]": {
-        "editor.unicodeHighlight.ambiguousCharacters": false,
-        "editor.unicodeHighlight.invisibleCharacters": false,
-        "diffEditor.ignoreTrimWhitespace": false,
-        "editor.wordWrap": "on",
-        "editor.quickSuggestions": {
-            "comments": "off",
-            "strings": "off",
-            "other": "off"
-        },
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "prettier.semi": true,
-        "prettier.singleQuote": true
-    }
+  "workbench.colorTheme": "Visual Studio Light", // Zennのデザインに合わせて白背景に設定
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "prettier.semi": true,
+  "prettier.singleQuote": true
 }
