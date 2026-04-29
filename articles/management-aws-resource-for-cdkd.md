@@ -34,8 +34,14 @@ https://x.com/365_step_tech/status/2046919133628170259?s=20
 `cdkd`はnpmパッケージとして公開されています。
 ここではpnpmプロジェクトにインストールして利用します。
 
+:::message
+本記事の動作確認には`@go-to-k/cdkd@0.0.3`を使用しています。
+
+一部の検証は`@go-to-k/cdkd@0.3.1`で追記しています。
+:::
+
 ```sh
-> pnpm add -D @go-to-k/cdkd@0.0.3
+> pnpm add -D @go-to-k/cdkd
 ```
 
 READMEのQuick Startセクションを見ると、AWS CDKと同様にbootstrapが必要とのことです。
@@ -236,8 +242,27 @@ cdkdでデプロイします。
 pnpm cdkd deploy --region ap-northeast-1 5.40s user 0.98s system 2% cpu 4:24.03 total
 ```
 
-5分1秒 → 4分24秒 と、デプロイ時間が40秒近くも縮まりました！
-AWS CDKはデプロイ時間がネックだったのでやはり時間が短縮できると嬉しいですね。
+~~5分1秒 → 4分24秒 と、デプロイ時間が40秒近くも縮まりました！~~
+
+:::message
+2026/04/29 追記
+
+cdkdのデプロイ速度が向上されたとのことでv0.3.1で再度試しました。同じスタックで試したところ、3分44秒 でした。AWS CDKと比較してなんと1分20秒近くの短縮です！
+
+https://x.com/365_step_tech/status/2049191934837866666?s=20
+
+```shell
+> time pnpm exec cdkd deploy --yes --region ap-northeast-1
+State bucket: cdkd-state-xxxxxxxxxxxx-ap-northeast-1
+Synthesizing CDK app...
+...
+
+pnpm exec cdkd deploy --yes --region ap-northeast-1  5.00s user 0.88s system 2% cpu 3:44.73 total
+```
+
+:::
+
+AWS CDKはデプロイ時間が長いのがネックであるため、時間が短縮できると嬉しいですね。
 
 ## `--no-wait`オプションをつけてデプロイしてみる
 
@@ -260,8 +285,24 @@ Synthesizing CDK app...
 pnpm cdkd deploy --no-wait --region ap-northeast-1  4.72s user 0.83s system 5% cpu 1:36.86 total
 ```
 
-1分36秒 ...！？
-CDKデプロイからは3分25秒、`--no-wait`オプションをつけない状態からは2分48秒も縮まっています...！
+~~1分36秒 ...！？~~
+~~CDKデプロイからは3分25秒、`--no-wait`オプションをつけない状態からは2分48秒も縮まっています...！~~
+
+:::message
+2026/04/29 追記
+
+こちらも`v0.3.1`で試したところ、1分22秒でデプロイできました。AWS CDKからは3分40秒ほど、`--no-wait`オプションをつけない状態からは2分20秒も縮まっています...！
+
+```shell
+> time pnpm exec cdkd deploy --no-wait --yes --region ap-northeast-1
+State bucket: cdkd-state-xxxxxxxxxxxx-ap-northeast-1
+Synthesizing CDK app...
+...
+
+pnpm exec cdkd deploy --no-wait --yes --region ap-northeast-1  4.64s user 0.82s system 6% cpu 1:22.69 total
+```
+
+:::
 
 開発環境で少しの変更加えるために毎度5分ほど待つのはしんどかったので、非同期デプロイができる`--no-wait`オプションは重宝しそうですね。
 
